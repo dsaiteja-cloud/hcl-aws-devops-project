@@ -1,4 +1,4 @@
-# DevOps Hackathon Challenge: Containerized Microservices Deployment 🚀
+# DevOps Hackathon Challenge - AWS Fargate Deployment Track 🚀
 
 👋 **Hi there!** Thanks for checking out my project. I built this to show off my DevOps skills. Let’s get started!
 

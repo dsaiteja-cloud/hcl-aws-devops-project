@@ -1,6 +1,6 @@
 # DevOps Hackathon Challenge: Containerized Microservices Deployment 🚀
 
-👋 **Hi there!** Thanks for checking out my project for the DevOps Hackathon Challenge. I built this to show off my skills. Let’s get started!
+👋 **Hi there!** Thanks for checking out my project. I built this to show off my DevOps skills. Let’s get started!
 
 ## Project Requirements and Instructions 📋
 
@@ -14,52 +14,13 @@ Want the full details? Check these out:
 
 Here’s what I did:
 
-- **Containerized** two microservices (Patient Service & Appointment Service) with Docker 🐳
-- **Deployed** them on AWS Fargate 🚀
-- Used **Terraform** for Infrastructure as Code (IaC) 🛠️
-- Set up **CI/CD** with GitHub Actions 🤖
-- Monitored everything with AWS CloudWatch 📊
+- **Containerized** two microservices (**Patient** Service & **Appointment** Service) with Docker 🐳
+- Used **Terraform** for Infrastructure as Code (IaC) 🛠️ to build the entire Infrasture.
+- Set up **CI/CD** with **GitHub Actions** which automatically triggers on pull requests and push to main branch 🤖
+- **Deployed** the microservices on **AWS ECS Cluster (Fargate)** 🚀
+- Serves the traffic through **AWS ALB** ⛕
+- Monitored everything with **AWS CloudWatch** 📊
 
-## Project Folder Structure 📁
-
-This is how my project is organized:
-
-```
-- .github/
-  - workflows/
-    - terraform-fmt-validate-plan.yml
-    - terraform-apply.yml
-    - build-docker-images.yml
-    - deploy-to-ecs.yml
-    - terraform-destroy.yml
-- .gitignore/
-- src/
-  - patient-service/
-    - patient-service.js
-    - package.json
-    - Dockerfile
-  - appointment-service/
-    - appointment-service.js
-    - package.json
-    - Dockerfile
-- terraform/
-  - main.tf
-  - variables.tf
-  - outputs.tf
-  - providers.tf
-  - modules/
-    - vpc/
-    - alb/
-    - ecr/
-    - iam/
-    - ecs_cluster/
-    - ecs_service/
-  - environments/
-    - dev/
-      - dev.tfvars
-      - backend.tf
-- README.md
-```
 
 ## How to Run the Project 🛠️
 
@@ -67,25 +28,41 @@ This is how my project is organized:
 
 - **AWS Account**: Set up an IAM user with limited permissions for S3, ALB, ECR, ECS, VPC, Security Groups, and CloudWatch.
 - **Access Keys**: Generate AWS access keys for the IAM user to use in GitHub Actions.
-- **GitHub Account**: You’ll need this to fork the project.
+- **GitHub Account**: You’ll need a github account to fork the project.
 
 ### Setup
 
 1. **Fork the Repo**: Go to my GitHub repo and click "Fork".
-2. **Add Secrets**: In your forked repo, go to **Settings > Secrets and variables > Actions** and add:
+2. Goto **Actions** > Cancel the **workflow** immediately. Because you need to add below **Secrets** under Repo settings.
+3. **Terraform Backend**: Create new S3 bucket and Dynamodb Table for state management.
+  ```
+  # Create S3 bucket and Dynamodb Table
+  aws s3api create-bucket --bucket <BUCKET_NAME> --region <AWS_REGION>
+  
+  aws dynamodb create-table -table-name <DYNAMODB_TABLE_NAME> \
+    --attribute-definitions AttributeName=LockID,AttributeType=S \
+    --key-schema AttributeName=LockID,KeyType=HASH \
+    --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1
+  ```
+2. Update with your S3 bucket (e.g., `project-bucket-tf-state`) and DynamoDB table (e.g., `project-dynamodb-tf-lock`) in `terraform/environments/dev/backend.tf` file.
+4. **Add Secrets**: In your forked repo, go to **Settings > Secrets and variables > Actions** and add:
    - `AWS_ACCESS_KEY_ID`: Your AWS access key ID.
    - `AWS_SECRET_ACCESS_KEY`: Your AWS secret access key.
    - `ECR_REGISTRY`: Your AWS ecr URL (e.g., `aws_account_id.dkr.ecr.region.amazonaws.com`).
-3. **Terraform Backend**: Update `terraform/environments/dev/backend.tf` with your S3 bucket (e.g., `project-bucket-tf-state`) and DynamoDB table (e.g., `project-dynamodb-tf-lock`) for state management.
-4. **Run It**: Push changes to your repo—GitHub Actions will handle the CI/CD magic!
+5. **Run It**: Finally Push some changes to your repo/main branch to trigger GitHub Actions which eventually creates the AWS Infra and Runs the project till the end! 💥
+
 
 ## Final Results 🎉
 
-It works! Here’s proof with load balancer DNS responses:  
+I have already ran & tested the project. ✅
+➡️ Here’s the Screenshot of Load Balancer response for both Microservices:
+
+**Patient Service:**
 ![Patient Service Response](./img/patient-service-response.png)  
+
+**Appointment Service:**
 ![Appointment Service Response](./img/appointment-service-response.png)  
-_(Note: Add your screenshots here to show the services in action!)_
 
 ---
 
-Thanks for stopping by! Hope you like it! 😊
+Thanks for checking out my project! Hope you like it! 😊

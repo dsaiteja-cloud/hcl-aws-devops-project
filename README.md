@@ -44,12 +44,12 @@ Here’s what I did:
     --key-schema AttributeName=LockID,KeyType=HASH \
     --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1
   ```
-2. Update with your S3 bucket (e.g., `project-bucket-tf-state`) and DynamoDB table (e.g., `project-dynamodb-tf-lock`) in `terraform/environments/dev/backend.tf` file.
-4. **Add Secrets**: In your forked repo, go to **Settings > Secrets and variables > Actions** and add:
+4. Update with your S3 bucket (e.g., `project-bucket-tf-state`) and DynamoDB table (e.g., `project-dynamodb-tf-lock`) in `terraform/environments/dev/backend.tf` file.
+5. **Add Secrets**: In your forked repo, go to **Settings > Secrets and variables > Actions** and add:
    - `AWS_ACCESS_KEY_ID`: Your AWS access key ID.
    - `AWS_SECRET_ACCESS_KEY`: Your AWS secret access key.
    - `ECR_REGISTRY`: Your AWS ecr URL (e.g., `aws_account_id.dkr.ecr.region.amazonaws.com`).
-5. **Run It**: Finally Push some changes to your repo/main branch to trigger GitHub Actions which eventually creates the AWS Infra and Runs the project till the end! 💥
+6. **Run It**: Finally Push some changes to your repo/main branch to automatically triggers GitHub Actions, which eventually creates the AWS Infra and Runs the project till the end! 💥
 
 
 ## Final Results 🎉

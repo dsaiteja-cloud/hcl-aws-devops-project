@@ -54,7 +54,7 @@ resource "aws_route_table_association" "public_assoc" {
   route_table_id = aws_route_table.public_rt.id
 }
 
-# NAT Gateway for private subnets (placed in the first public subnet)
+# NAT Gateway for private subnets
 resource "aws_eip" "nat_eip" {
   domain = "vpc"
   tags = {
@@ -62,6 +62,7 @@ resource "aws_eip" "nat_eip" {
   }
 }
 
+# placed in the first public subnet
 resource "aws_nat_gateway" "nat" {
   allocation_id = aws_eip.nat_eip.id
   subnet_id     = aws_subnet.public[0].id

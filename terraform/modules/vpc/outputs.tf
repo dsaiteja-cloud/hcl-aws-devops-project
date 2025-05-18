@@ -9,7 +9,3 @@ output "public_subnet_ids" {
 output "private_subnet_ids" {
   value = aws_subnet.private[*].id
 }
-
-# output "ecs_security_group" {
-#   value = aws_security_group.ecs_tasks.id
-# }

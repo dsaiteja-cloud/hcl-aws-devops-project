@@ -30,14 +30,14 @@ resource "aws_security_group" "ecs" {
     from_port       = 3000
     to_port         = 3000
     protocol        = "tcp"
-    security_groups = [aws_security_group.alb.id] # Corrected from cidr_blocks
+    security_groups = [aws_security_group.alb.id]
   }
   ingress {
     description     = "Allow TCP on port 3001"
     from_port       = 3001
     to_port         = 3001
     protocol        = "tcp"
-    security_groups = [aws_security_group.alb.id] # Corrected from cidr_blocks
+    security_groups = [aws_security_group.alb.id]
   }
   egress {
     from_port   = 0

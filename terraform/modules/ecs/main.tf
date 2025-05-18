@@ -93,7 +93,7 @@ resource "aws_ecs_service" "patient" {
   }
   load_balancer {
     target_group_arn = aws_lb_target_group.patient.arn
-    container_name   = "patient-task" # Corrected from "patient-service"
+    container_name   = "patient-task"
     container_port   = var.patient_container_port
   }
 }
@@ -112,7 +112,7 @@ resource "aws_ecs_service" "appointment" {
   }
   load_balancer {
     target_group_arn = aws_lb_target_group.appointment.arn
-    container_name   = "appointment-task" # Corrected from "appointment-service"
+    container_name   = "appointment-task"
     container_port   = var.appointment_container_port
   }
 }

@@ -1,0 +1,9 @@
+variable "region" {}
+variable "cidr_block" {}
+variable "customer" {}
+variable "project" {}
+variable "environment" {}
+variable "public_subnet_cidrs" {}
+variable "private_subnet_cidrs" {}
+variable "public_azs" {}
+variable "private_azs" {}
